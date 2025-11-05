@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTitle}">Welcome | My Website</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Google Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" th:href="@{/css/homepage.css}">
+</head>
+
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand fw-bold" th:href="@{/html/budgetIQ}">BudgetIQ</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
+                <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                <!-- Login Button in Navbar -->
+                <li class="nav-item">
+                    <a class="btn btn-outline-light ms-3" th:href="@{/login}">Login</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section id="home" class="hero">
+    <div>
+        <h1 th:text="'Welcome, ' + ${username} + '!'">Welcome, Buddy !</h1>
+        <p>Track it, Save it, Love it 💖 — BudgetIQ makes it easy!</p>
+        <a href="#features" class="btn btn-glow mt-4">Explore Now</a>
+
+    </div>
+</section>
+
+<!-- Features -->
+<section id="features" class="features">
+    <div class="container text-center">
+        <h2 class="mb-5 fw-bold">Amazing Features</h2>
+        <div class="row">
+            <div class="col-md-4 feature-box">
+                <i class="bi bi-lightning-charge-fill fs-1 text-primary"></i>
+                <h4 class="mt-3">Fast & Reliable</h4>
+                <p>Experience lightning-fast performance with seamless integration.</p>
+            </div>
+            <div class="col-md-4 feature-box">
+                <i class="bi bi-shield-lock-fill fs-1 text-success"></i>
+                <h4 class="mt-3">Secure & Trusted</h4>
+                <p>We value your privacy and ensure top-notch data security.</p>
+            </div>
+            <div class="col-md-4 feature-box">
+                <i class="bi bi-stars fs-1 text-warning"></i>
+                <h4 class="mt-3">Modern Design</h4>
+                <p>Enjoy a smooth and intuitive user experience.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer id="contact">
+    <p>Built with ❤️</p>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
