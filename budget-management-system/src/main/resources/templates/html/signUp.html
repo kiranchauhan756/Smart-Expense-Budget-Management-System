@@ -1,10 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>SingUp page</title>
+    <title>Login | MyApp</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/signUp.css}">
 </head>
 <body>
+
+<div class="login-container">
+    <h2>Hello there! 👋</h2>
+
+
+    <form action="#" th:action="@{/user}" th:object="${user}" method="post">
+        <input type="hidden" th:field="*{id}">
+        <input type="text" th:field="*{username}" placeholder="Username" required>
+        <input type="email" th:field="*{email}" placeholder="Email" required>
+        <input type="password" th:field="*{password}" placeholder="Password" required>
+
+        <button type="submit" class="login-btn">Save</button>
+    </form>
+
+</div>
 
 </body>
 </html>

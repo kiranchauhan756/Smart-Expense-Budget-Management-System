@@ -11,10 +11,11 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity)throws  Exception{
         httpSecurity.authorizeHttpRequests(auth->
-                auth.requestMatchers("/").permitAll()
+                auth.requestMatchers("/","/signUp","/signUp/**","/user","/css/**", "/js/**", "/images/**", "/webjars/**").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(form->
-                        form.loginPage("/login").permitAll())
+                        form.loginPage("/login")
+                                .loginProcessingUrl("/authenticateTheUser").defaultSuccessUrl("/dashboard").permitAll())
                 .logout(LogoutConfigurer::permitAll);
         return httpSecurity.build();
     }

@@ -6,91 +6,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
-
-    <style>
-        body {
-            margin: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(135deg, #74ABE2, #5563DE);
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .login-container {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(15px);
-            border-radius: 16px;
-            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
-            padding: 40px 50px;
-            text-align: center;
-            width: 350px;
-            color: white;
-            animation: fadeIn 1s ease-in;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        h2 {
-            margin-bottom: 20px;
-            font-weight: 600;
-        }
-
-        input[type="text"], input[type="password"] {
-            width: 100%;
-            padding: 12px 15px;
-            margin: 8px 0 20px;
-            border: none;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            font-size: 14px;
-            outline: none;
-            transition: 0.3s;
-        }
-
-        input:focus {
-            background: rgba(255, 255, 255, 0.35);
-        }
-
-        .login-btn {
-            width: 100%;
-            padding: 12px;
-            background: #00c6ff;
-            background: linear-gradient(90deg, #00c6ff 0%, #0072ff 100%);
-            border: none;
-            border-radius: 8px;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .login-btn:hover {
-            background: linear-gradient(90deg, #0072ff 0%, #00c6ff 100%);
-            transform: translateY(-2px);
-        }
-
-        .error {
-            color: #ff8080;
-            font-size: 14px;
-            margin-bottom: 15px;
-        }
-
-        .login-footer {
-            margin-top: 20px;
-            font-size: 13px;
-        }
-
-        .login-footer a {
-            color: #fff;
-            text-decoration: underline;
-        }
-    </style>
+     <link rel="stylesheet" th:href="@{/css/login.css}">
 </head>
 <body>
 
@@ -101,7 +17,7 @@
     <div th:if="${param.error}" class="error">Invalid username or password</div>
     <div th:if="${param.logout}" class="error" style="color:#aaffaa;">You have been logged out successfully</div>
 
-    <form th:action="@{/login}" method="post">
+    <form action="#" th:action="@{/authenticateTheUser}" method="post">
         <input type="text" name="username" placeholder="Username" required>
         <input type="password" name="password" placeholder="Password" required>
 
@@ -109,7 +25,7 @@
     </form>
 
     <div class="login-footer">
-        <p>Don’t have an account? <a href="#">Register</a></p>
+        <p>Don’t have an account? <a th:href="@{/signUp}">Register</a></p>
     </div>
 </div>
 
