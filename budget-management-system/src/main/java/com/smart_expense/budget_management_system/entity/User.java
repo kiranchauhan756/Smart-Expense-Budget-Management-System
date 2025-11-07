@@ -10,7 +10,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,36 +19,46 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Table
+
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
+@Entity
+@Table
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
     private Integer id;
+
     @Column(unique = true)
     private String email;
-    @Column
+
     private String password;
-    @Column
+
+    @Column(unique = true)
     private String username;
-    @Column
-    private boolean status;
-    @Column
+
+    private boolean isActive;
+
     private LocalDateTime createdDate;
-    @Column
+
     private LocalDateTime lastModifiedDate;
-    @Column
+
     @ManyToMany(fetch=FetchType.LAZY)
+    //defining user_roles table with composite key user_id & role_id
     @JoinTable(name="user_roles",joinColumns = @JoinColumn(name="user_id"),
     inverseJoinColumns = @JoinColumn(name="role_id"))
     private List<Role> roles;
 
+    public User(String email, String password, String username, boolean isActive, LocalDateTime createdDate, LocalDateTime lastModifiedDate) {
+        this.email = email;
+        this.password = password;
+        this.username = username;
+        this.isActive = isActive;
+        this.createdDate = createdDate;
+        this.lastModifiedDate = lastModifiedDate;
+    }
 
     public void addRoles(Role role){
         if(roles==null){

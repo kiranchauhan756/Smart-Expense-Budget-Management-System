@@ -14,13 +14,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.util.List;
 
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Setter
-@Getter
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +29,13 @@ public class Role {
     private Integer id;
     @Column(unique = true)
     private String name;
+    @Column
+    private String description;
     @ManyToMany(mappedBy = "roles")
     private List<User> users;
 
+    public Role(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
 }
