@@ -1,10 +1,73 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
 <head>
-    <meta charset="UTF-8">
-    <title>Dashboard</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
 <body>
-<p>hello Admin!</p>
+<div class="container-fluid">
+    <div class="row" style="height:100vh">
+        <div class="col-2 col-sm-3 col-xl-2 bg-dark">
+            <nav class="navbar bg-dark border-bottom border-white mb-3" data-bs-theme="dark">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#">
+                       <i class="bi bi-wallet2"></i><span class="d-none d-sm-inline ms-2">BudgetIQ</span>
+                    </a>
+                </div>
+            </nav>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link text-white" style="white-space:nowrap"  href="#">
+                        <i class="bi bi-house-door"></i><span class="d-none d-sm-inline ms-2">Home</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" style="white-space:nowrap" href="#">
+                        <i class="bi bi-person"></i><span class="d-none d-sm-inline ms-2">Users</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" style="white-space:nowrap" href="#">
+                        <i class="bi bi-tag"></i><span class="d-none d-sm-inline ms-2">Categories</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" style="white-space:nowrap"  href="#">
+                        <i class="bi bi-coin"></i><span class="d-none d-sm-inline ms-2">Expenses</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" style="white-space:nowrap" href="#">
+                        <i class="bi bi-bullseye"></i><span class="d-none d-sm-inline ms-2">Budgets</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" style="white-space:nowrap" href="#">
+                        <i class="bi bi-card-text"></i><span class="d-none d-sm-inline ms-2">Audit Logs</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" style="white-space:nowrap" href="#">
+                        <i class="bi bi-gear"></i><span class="d-none d-sm-inline ms-2">Settings</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" style="white-space:nowrap" href="#">
+                        <i class="bi bi-box-arrow-in-left"></i><span class="d-none d-sm-inline ms-2">Log Out</span></a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-10 col-sm-9 col-xl-10 p-0 m-0">
+            <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                <div class="container-fluid">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="bi bi-person-circle"></i><span class="d-none d-sm-inline ms-2"></span>
+                        </a>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </body>
 </html>
