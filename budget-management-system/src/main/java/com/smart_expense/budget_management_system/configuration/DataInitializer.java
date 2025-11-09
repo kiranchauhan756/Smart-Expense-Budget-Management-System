@@ -4,6 +4,7 @@ import com.smart_expense.budget_management_system.entity.Role;
 import com.smart_expense.budget_management_system.entity.User;
 import com.smart_expense.budget_management_system.repository.RoleRepository;
 import com.smart_expense.budget_management_system.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -18,6 +19,7 @@ public class DataInitializer implements CommandLineRunner {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+    @Autowired
     public DataInitializer(RoleRepository roleRepository,UserRepository userRepository,PasswordEncoder passwordEncoder) {
         this.roleRepository = roleRepository;
         this.userRepository=userRepository;

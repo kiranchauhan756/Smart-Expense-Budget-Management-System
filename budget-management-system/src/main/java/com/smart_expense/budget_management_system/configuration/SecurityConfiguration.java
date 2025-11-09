@@ -17,7 +17,9 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity)throws  Exception{
         httpSecurity.authorizeHttpRequests(auth->
-                auth.requestMatchers("/","/signUp","/signUp/**","/user","/css/**", "/js/**", "/images/**", "/webjars/**").permitAll()
+                auth.requestMatchers("/","/home**","/css/**", "/js/**", "/images/**", "/webjars/**").permitAll()
+                        .requestMatchers("/admin**").hasRole("ADMIN")
+                        .requestMatchers("/user**").hasRole("USER")
                         .anyRequest().authenticated())
                 .formLogin(form->
                         form.loginPage("/login")
@@ -25,12 +27,12 @@ public class SecurityConfiguration {
                                 .successHandler(((request, response, authentication) ->
                                 {
                                     var authorities=authentication.getAuthorities();
-                                    String redirectUrl="/dashboard/user";
+                                    String redirectUrl="/user/dashboard";
                                     if(authorities.stream().anyMatch(a->a.getAuthority().equals("ROLE_ADMIN"))){
-                                        redirectUrl="/dashboard/admin";
+                                        redirectUrl="/admin/dashboard";
                                     }
                                     else if(authorities.stream().anyMatch(a->a.getAuthority().equals("ROLE_USER"))){
-                                        redirectUrl="/dashboard/user";
+                                        redirectUrl="/user/dashboard";
                                     }
                                     response.sendRedirect(redirectUrl);
                                 }))

@@ -13,43 +13,43 @@
         <div class="col-2 col-sm-3 col-xl-2 bg-dark">
             <nav class="navbar bg-dark border-bottom border-white mb-3" data-bs-theme="dark">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="#">
+                    <a class="navbar-brand" th:href="@{/admin/budget}">
                        <i class="bi bi-wallet2"></i><span class="d-none d-sm-inline ms-2">BudgetIQ</span>
                     </a>
                 </div>
             </nav>
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <a class="nav-link text-white" style="white-space:nowrap"  href="#">
+                    <a class="nav-link text-white" style="white-space:nowrap"  th:href="@{/admin/home}">
                         <i class="bi bi-house-door"></i><span class="d-none d-sm-inline ms-2">Home</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" style="white-space:nowrap" href="#">
+                    <a class="nav-link text-white" style="white-space:nowrap" th:href="@{/admin/users}">
                         <i class="bi bi-person"></i><span class="d-none d-sm-inline ms-2">Users</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" style="white-space:nowrap" href="#">
+                    <a class="nav-link text-white" style="white-space:nowrap" th:href="@{/admin/category}">
                         <i class="bi bi-tag"></i><span class="d-none d-sm-inline ms-2">Categories</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" style="white-space:nowrap"  href="#">
+                    <a class="nav-link text-white" style="white-space:nowrap"  th:href="@{/admin/expense}">
                         <i class="bi bi-coin"></i><span class="d-none d-sm-inline ms-2">Expenses</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" style="white-space:nowrap" href="#">
+                    <a class="nav-link text-white" style="white-space:nowrap" th:href="@{/admin/budget}">
                         <i class="bi bi-bullseye"></i><span class="d-none d-sm-inline ms-2">Budgets</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" style="white-space:nowrap" href="#">
+                    <a class="nav-link text-white" style="white-space:nowrap" th:href="@{/admin/audit}">
                         <i class="bi bi-card-text"></i><span class="d-none d-sm-inline ms-2">Audit Logs</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" style="white-space:nowrap" href="#">
+                    <a class="nav-link text-white" style="white-space:nowrap" th:href="@{/admin/settings}">
                         <i class="bi bi-gear"></i><span class="d-none d-sm-inline ms-2">Settings</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" style="white-space:nowrap" href="#">
+                    <a class="nav-link text-white" style="white-space:nowrap" th:href="@{/logout}">
                         <i class="bi bi-box-arrow-in-left"></i><span class="d-none d-sm-inline ms-2">Log Out</span></a>
                 </li>
             </ul>

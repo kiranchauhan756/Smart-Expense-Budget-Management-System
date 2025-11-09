@@ -10,21 +10,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HomePageController {
 
   // This mapping is showing the home page
-    @RequestMapping("/")
+    @GetMapping("/")
     public String showHomePage(){
-        return "html/homePage";
+        return "home/homePage";
     }
     @RequestMapping("/login")
     public String loginPage(){
-        return "html/login";
-    }
-    @RequestMapping("/budgetIQ")
-    public String budgetIQPage(){
-        return "html/budgetIQ";
+        return "home/login";
     }
     @GetMapping("/signUp")
     public String signUpPage(Model model){
         model.addAttribute("user",new User());
-        return "html/signUp";
+        return "home/signUp";
     }
 }
