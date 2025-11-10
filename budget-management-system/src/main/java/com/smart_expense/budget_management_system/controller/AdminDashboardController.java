@@ -24,7 +24,7 @@ public class AdminDashboardController {
     public String showAdminDashboardPage(Model model, Principal principal){
        String username=principal.getName();
        User user=userService.findUserByUserName(username);
-       model.addAttribute(user);
+       model.addAttribute("user",user);
         return "admin/dashboard";
     }
     @GetMapping("/users")
@@ -46,5 +46,13 @@ public class AdminDashboardController {
     @GetMapping("/settings")
     public String showAdminSettingsPage(){
         return "admin/settings";
+    }
+    @GetMapping("/home")
+    public String showAdminHomePage(){
+        return "admin/home";
+    }
+    @GetMapping("/audit")
+    public String showAdminAuditPage(){
+        return "admin/audit";
     }
 }

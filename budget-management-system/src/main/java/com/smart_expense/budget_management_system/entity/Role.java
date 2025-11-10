@@ -12,6 +12,8 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
+
 import java.util.List;
 
 
@@ -31,6 +33,7 @@ public class Role {
     private String name;
     @Column
     private String description;
+    @ToString.Exclude
     @ManyToMany(mappedBy = "roles")
     private List<User> users;
 

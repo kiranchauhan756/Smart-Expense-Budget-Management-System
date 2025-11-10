@@ -1,11 +1,16 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{budget.html}">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/dashboard}">
 <head>
+    <title>Expense</title>
 </head>
 <body>
-<div class="container" layout:fragment="content">
-    <p>Welcome to the expense page</p>
+<div layout:fragment="content">
+    <div class="container mt-3">
+        <p>Welcome to the Expense Page of Admin</p>
+    </div>
 </div>
 </body>
 </html>

@@ -1,10 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{user/dashboard}">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Expense</title>
 </head>
 <body>
-
+<div layout:fragment="content">
+    <div class="container mt-3">
+        <p>Welcome to the users Page of Admin</p>
+    </div>
+</div>
 </body>
 </html>

@@ -1,11 +1,16 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{category.html}">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/dashboard}">
 <head>
+    <title>Category Page</title>
 </head>
 <body>
-<div class="container" layout:fragment="content">
-    <p>Welcome to the category page</p>
+<div layout:fragment="content">
+    <div class="container mt-3">
+        <p>Welcome to the admin category page</p>
+    </div>
 </div>
 </body>
 </html>

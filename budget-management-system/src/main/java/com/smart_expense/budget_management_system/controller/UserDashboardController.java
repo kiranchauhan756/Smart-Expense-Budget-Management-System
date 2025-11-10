@@ -37,4 +37,12 @@ public class UserDashboardController {
     public String showUserExpensePage(){
         return "user/expense";
     }
+    @GetMapping("/settings")
+    public String showUserSettingsPage(){
+        return "user/settings";
+    }
+    @GetMapping("/home")
+    public String showUserHomePage(){
+        return "user/home";
+    }
 }
