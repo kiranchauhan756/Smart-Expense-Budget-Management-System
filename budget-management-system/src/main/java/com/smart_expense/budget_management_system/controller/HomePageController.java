@@ -9,18 +9,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class HomePageController {
 
-  // This mapping is showing the home page
+    // This mapping is showing the home page
     @GetMapping("/")
-    public String showHomePage(){
+    public String showHomePage() {
         return "home/homePage";
     }
+
     @RequestMapping("/login")
-    public String loginPage(){
+    public String loginPage() {
         return "home/login";
     }
+
     @GetMapping("/signUp")
-    public String signUpPage(Model model){
-        model.addAttribute("user",new User());
+    public String signUpPage(Model model) {
+        model.addAttribute("user", new User());
         return "home/signUp";
+    }
+    @RequestMapping("/logout")
+    public String logoutPage() {
+        return "redirect:/login?logout";
     }
 }

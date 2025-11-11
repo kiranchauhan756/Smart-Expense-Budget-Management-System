@@ -36,7 +36,7 @@ public class SecurityConfiguration {
                                     }
                                     response.sendRedirect(redirectUrl);
                                 }))
-                ).logout(LogoutConfigurer::permitAll);
+                ).logout(httpSecurityLogoutConfigurer -> httpSecurityLogoutConfigurer.permitAll().logoutUrl("/logout").logoutSuccessUrl("/login?logout"));
         return httpSecurity.build();
     }
 }

@@ -10,6 +10,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
 <body>
+<div th:if="${param.error}" class="error">Invalid username or password</div>
+<div th:if="${param.logout}" class="error" style="color:#FFFFFF;">You have been logged out successfully</div>
+
 <div class="container-fluid">
     <div class="row" style="height:100vh">
         <div class="col-2 col-sm-3 col-xl-2 bg-dark">
