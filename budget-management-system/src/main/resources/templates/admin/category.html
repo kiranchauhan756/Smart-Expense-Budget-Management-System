@@ -9,7 +9,23 @@
 <body>
 <div layout:fragment="content">
     <div class="container mt-3">
-        <p>Welcome to the admin category page</p>
+        <a th:href="@{/admin/category/addCategory}" class="btn btn-primary btn-sm mb-3">Add Category</a>
+        <table class="table table-striped">
+            <thead class="table-light">
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="tempCategory :${categories}">
+             <td th:text="${tempCategory.name}"></td>
+                <td th:text="${tempCategory.description}"></td>
+            </tr>
+            </tbody>
+
+        </table>
     </div>
 </div>
 </body>

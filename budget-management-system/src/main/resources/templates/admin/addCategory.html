@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/dashboard}">
+<head>
+  <title>Add Category</title>
+</head>
+<body>
+<div layout:fragment="content">
+  <div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="p-4 bg-light rounded-4 shadow-sm" style="width: 100%; max-width: 500px;">
+      <h4 class="mb-4 text-center">Add Category</h4>
+      <form th:action="@{/admin/category/save}" th:object="${category}" method="POST">
+        <input type="hidden" th:field="*{id}" />
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Category Name</label>
+          <input type="text" th:field="*{name}" class="form-control rounded-3" placeholder="Enter category name" required>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Description</label>
+          <textarea th:field="*{description}" class="form-control rounded-3" rows="3" placeholder="Enter short description" required></textarea>
+        </div>
+
+        <div class="d-flex gap-2">
+          <button type="submit" class="btn btn-primary">Save</button>
+          <a th:href="@{/admin/category}" class="btn btn-secondary">Back</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+</html>

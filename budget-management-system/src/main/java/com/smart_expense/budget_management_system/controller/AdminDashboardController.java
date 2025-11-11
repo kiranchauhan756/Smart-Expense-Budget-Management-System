@@ -1,8 +1,10 @@
 package com.smart_expense.budget_management_system.controller;
 
+import com.smart_expense.budget_management_system.entity.Category;
 import com.smart_expense.budget_management_system.entity.User;
 import com.smart_expense.budget_management_system.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,10 +33,6 @@ public class AdminDashboardController {
     public String showAdminUsersPage(){
         return "admin/users";
     }
-    @GetMapping("/category")
-    public String showAdminCategoryPage(){
-        return "admin/category";
-    }
     @GetMapping("/budget")
     public String showAdminBudgetPage(){
         return "admin/budget";
@@ -55,4 +53,5 @@ public class AdminDashboardController {
     public String showAdminAuditPage(){
         return "admin/audit";
     }
+
 }
