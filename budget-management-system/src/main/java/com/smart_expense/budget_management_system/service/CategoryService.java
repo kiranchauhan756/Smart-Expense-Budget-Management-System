@@ -3,6 +3,8 @@ package com.smart_expense.budget_management_system.service;
 import com.smart_expense.budget_management_system.entity.Category;
 import com.smart_expense.budget_management_system.entity.DateDescription;
 import com.smart_expense.budget_management_system.entity.User;
+import com.smart_expense.budget_management_system.exception.CategoryAlreadyExistsException;
+import com.smart_expense.budget_management_system.exception.CategoryNotFoundException;
 import com.smart_expense.budget_management_system.repository.CategoryRepository;
 import com.smart_expense.budget_management_system.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,17 +26,39 @@ public class CategoryService {
         this.userRepository=userRepository;
     }
 
-    public Category saveCategory(Category category){
+    public void saveCategory(Category category){
         String username= SecurityContextHolder.getContext().getAuthentication().getName();
         Optional<User> user=userRepository.findByUsername(username);
-        if(user.isPresent()){
-            category.setDefaultCategory(false);
-            category.setDateDescription(new DateDescription(LocalDateTime.now(),user.get().getId(),user.get().getUsername(),LocalDateTime.now(),user.get().getUsername(),user.get().getId()));
+        Optional<Category> category1 = categoryRepository.findByName(category.getName());
+
+        if(category1.isEmpty()) {
+            if (user.isPresent()) {
+                category.setDefaultCategory(false);
+                category.setDateDescription(new DateDescription(LocalDateTime.now(), user.get().getId(), user.get().getUsername(), LocalDateTime.now(), user.get().getUsername(), user.get().getId()));
+                categoryRepository.save(category);
             }
-      return  categoryRepository.save(category);
+        }
+        else {
+                throw new CategoryAlreadyExistsException("Category with this name already exists.");
+            }
     }
 
     public List<Category> getAllCategories(){
+        if(categoryRepository.findAll().isEmpty()) throw new CategoryNotFoundException("No Category Exists");
         return categoryRepository.findAll();
     }
+    public Optional<Category> findCategoryById(Long id){
+        if(categoryRepository.findById(id).isEmpty())throw new CategoryNotFoundException("No Category found with this id");
+        return categoryRepository.findById(id);
+    }
+
+    public void deleteCategory(long id){
+        Optional<Category> category=categoryRepository.findById(id);
+        if(category.isEmpty())throw new CategoryNotFoundException("No Category found with this id");
+        else{
+            categoryRepository.deleteById(id);
+        }
+    }
+
+
 }

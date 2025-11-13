@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.security.Principal;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/user")
@@ -21,8 +22,8 @@ public class UserDashboardController {
     @GetMapping("/dashboard")
     public String showUserDashboardPage(Model model, Principal principal){
        String username=principal.getName();
-       User user=userService.findUserByUserName(username);
-       model.addAttribute(user);
+       Optional<User> user=userService.findUserByUserName(username);
+        user.ifPresent(model::addAttribute);
         return "user/dashboard";
     }
     @GetMapping("/category")

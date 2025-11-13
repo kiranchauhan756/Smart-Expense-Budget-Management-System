@@ -48,7 +48,7 @@ public class DataInitializer implements CommandLineRunner {
             userRepository.save(user);
         }
 
-        //Adding (Food,Groceries,Rent,Shopping,Medicine,Travel,School Fee,Electricity Bill,Gym,Electronics,) default categories in  Category table
+        //Adding (Food,Groceries,Rent,Shopping,Medicine,Travel,School Fee,Electricity Bill,Gym,Electronics) default categories in  Category table
         if(categoryRepository.count()==0) {
             categoryRepository.save(new Category("Food", "Expenses related to eating out, restaurants, or daily meals.", new DateDescription(LocalDateTime.now(), 1L, "admin", LocalDateTime.now(), "admin", 1L)));
             categoryRepository.save(new Category("Groceries", "Daily household essentials and food items purchased from stores or supermarkets.", new DateDescription(LocalDateTime.now(), 1L, "admin", LocalDateTime.now(), "admin", 1L)));

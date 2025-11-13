@@ -1,9 +1,9 @@
 package com.smart_expense.budget_management_system.exception;
 
-public class UserNotFoundException extends RuntimeException{
+public class UserAlreadyExistException extends RuntimeException{
     private String message;
 
-    public UserNotFoundException(String message) {
+    public UserAlreadyExistException(String message){
         super(message);
     }
 }
