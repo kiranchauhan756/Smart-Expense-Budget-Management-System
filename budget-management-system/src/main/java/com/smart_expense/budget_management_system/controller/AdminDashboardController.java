@@ -1,6 +1,7 @@
 package com.smart_expense.budget_management_system.controller;
 
 import com.smart_expense.budget_management_system.entity.User;
+import com.smart_expense.budget_management_system.service.CategoryService;
 import com.smart_expense.budget_management_system.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,10 +16,12 @@ import java.util.Optional;
 @RequestMapping("/admin")
 public class AdminDashboardController {
     private final UserService userService;
+    private final CategoryService categoryService;
 
     @Autowired
-    public AdminDashboardController(UserService userService) {
+    public AdminDashboardController(UserService userService,CategoryService categoryService) {
         this.userService = userService;
+        this.categoryService=categoryService;
     }
 
     @GetMapping("/dashboard")
@@ -29,7 +32,11 @@ public class AdminDashboardController {
         return "admin/dashboard";
     }
     @GetMapping("/users")
-    public String showAdminUsersPage(){
+    public String showAdminUsersPage(Model model){
+        Integer totalUsers= userService.getTotalUsers();
+        Integer totalCategories= categoryService.getTotalCategories();
+        model.addAttribute("totalUsers",totalUsers);
+        model.addAttribute("totalCategories",totalCategories);
         return "admin/users";
     }
     @GetMapping("/budget")
@@ -45,7 +52,11 @@ public class AdminDashboardController {
         return "admin/settings";
     }
     @GetMapping("/home")
-    public String showAdminHomePage(){
+    public String showAdminHomePage(Model model){
+        Integer totalUsers= userService.getTotalUsers();
+        Integer totalCategories= categoryService.getTotalCategories();
+        model.addAttribute("totalUsers",totalUsers);
+        model.addAttribute("totalCategories",totalCategories);
         return "admin/home";
     }
     @GetMapping("/audit")

@@ -29,4 +29,5 @@ public class HomePageController {
     public String logoutPage() {
         return "redirect:/login?logout";
     }
+
 }

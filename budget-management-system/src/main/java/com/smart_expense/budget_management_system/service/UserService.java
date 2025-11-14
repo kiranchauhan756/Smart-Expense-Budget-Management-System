@@ -2,12 +2,15 @@ package com.smart_expense.budget_management_system.service;
 
 import com.smart_expense.budget_management_system.entity.User;
 import com.smart_expense.budget_management_system.exception.UserAlreadyExistException;
+import com.smart_expense.budget_management_system.exception.UserNotFoundException;
 import com.smart_expense.budget_management_system.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.List;
+
 
 @Service
 public class UserService {
@@ -37,6 +40,11 @@ public class UserService {
 
     public Optional<User> findUserByUserName(String username){
         return userRepository.findByUsername(username);
+    }
+
+    public Integer getTotalUsers(){
+        if(userRepository.count()!=0)return Math.toIntExact(userRepository.count());
+        throw new UserNotFoundException("No users are present in the system yet..");
     }
 
 }

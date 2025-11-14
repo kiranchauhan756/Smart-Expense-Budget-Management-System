@@ -60,5 +60,10 @@ public class CategoryService {
         }
     }
 
+    public Integer getTotalCategories(){
+        if(categoryRepository.count()!=0)return Math.toIntExact(categoryRepository.count());
+        throw new CategoryNotFoundException("No categories are present in the system yet...");
+    }
+
 
 }

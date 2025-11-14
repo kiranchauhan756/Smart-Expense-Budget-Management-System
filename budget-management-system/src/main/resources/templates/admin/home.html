@@ -17,28 +17,50 @@
         body { font-family: 'Poppins', sans-serif; }
     </style>
 </head>
-<body>
-<div layout:fragment="content" class="container my-4">
-    <div class="row justify-content-center">
+<body >
+<main layout:fragment="content" class="container my-4">
+    <div class="row justify-content-center" style="flex-wrap: wrap;">
         <div class="col-md-4 mb-3">
             <div class="card h-100 text-center">
-                <div class="card-body" th:object="${user}">
+                <div class="card-body">
                     <h5 class="card-title">Total Users</h5>
-                    <p class="card-text" th:text="*{user}">Some quick example text.</p>
-                    <a href="#" class="btn btn-primary">Learn More</a>
+                    <p class="card-text" th:text="${totalUsers}">[${totalUsers}]</p>
+                    <a th:href="@{/admin/users}" class="btn btn-primary">See More</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="card h-100 text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Total Categories</h5>
+                    <p class="card-text" th:text="${totalCategories}">0</p>
+                    <a th:href="@{/admin/category}" class="btn btn-primary">See More</a>
                 </div>
             </div>
         </div>
         <div class="col-md-4 mb-3">
             <div class="card h-100 text-center">
                 <div class="card-body">
-                    <h5 class="card-title">Total Categories</h5>
-                    <p class="card-text">More example content.</p>
-                    <a href="#" class="btn btn-primary">Learn More</a>
+                    <h5 class="card-title">Total Budgets</h5>
+                    <p class="card-text" th:text="${totalCategories}">0</p>
+                    <a th:href="@{/admin/budget}" class="btn btn-primary">See More</a>
                 </div>
             </div>
         </div>
     </div>
-</div>
+    <div class="row justify-content-center" style="flex-wrap: wrap;">
+        <div class="col-md-4 mb-3">
+            <div class="card h-100 text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Most Expensed Category</h5>
+                    <p class="card-text" th:text="${totalCategories}">0</p>
+                    <a th:href="@{/admin/budget}" class="btn btn-primary">See More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
 </body>
 </html>
