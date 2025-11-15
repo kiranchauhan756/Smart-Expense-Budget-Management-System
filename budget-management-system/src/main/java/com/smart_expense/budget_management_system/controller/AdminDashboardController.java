@@ -31,7 +31,8 @@ public class AdminDashboardController {
        model.addAttribute("user",user);
         return "admin/dashboard";
     }
-    @GetMapping("/users")
+
+    @GetMapping("/home/users")
     public String showAdminUsersPage(Model model){
         Integer totalUsers= userService.getTotalUsers();
         Integer totalCategories= categoryService.getTotalCategories();
@@ -39,6 +40,7 @@ public class AdminDashboardController {
         model.addAttribute("totalCategories",totalCategories);
         return "admin/users";
     }
+
     @GetMapping("/budget")
     public String showAdminBudgetPage(){
         return "admin/budget";

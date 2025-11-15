@@ -21,6 +21,6 @@ public class UserController {
     @PostMapping
     public String saveUser(@ModelAttribute("user") User user){
         userService.saveUser(user);
-        return "html/login";
+        return "home/login";
     }
 }
