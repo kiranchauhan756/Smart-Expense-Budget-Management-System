@@ -10,12 +10,15 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +27,9 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
+@Data
 @Entity
 @Table
-@Data
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,17 +37,21 @@ public class User {
 
     @Column(unique = true,nullable = false)
     private String email;
-
     private String password;
-
     @Column(unique = true)
     private String username;
-
     private boolean isActive;
-
     private LocalDateTime createdDate;
-
     private LocalDateTime lastModifiedDate;
+    private String alternateEmail;
+    private String gender;
+    @Column(length=10,nullable = false)
+    @Size(min=10,max=10)
+    private String phoneNumber;
+    private String profilePic;
+    @Column(nullable = false)
+    private LocalDate dob;
+
 
     @ManyToMany(fetch=FetchType.LAZY)
     //defining user_roles table with composite key user_id & role_id
@@ -52,7 +59,8 @@ public class User {
     inverseJoinColumns = @JoinColumn(name="role_id"))
     private List<Role> roles;
 
-    public User(String email, String password, String username, boolean isActive, LocalDateTime createdDate, LocalDateTime lastModifiedDate) {
+    public User(LocalDate dob,String email, String password, String username, boolean isActive, LocalDateTime createdDate, LocalDateTime lastModifiedDate) {
+        this.dob=dob;
         this.email = email;
         this.password = password;
         this.username = username;
@@ -61,7 +69,7 @@ public class User {
         this.lastModifiedDate = lastModifiedDate;
     }
 
-    public void addRoles(Role role){
+   public void addRoles(Role role){
         if(roles==null){
             roles=new ArrayList<>();
         }

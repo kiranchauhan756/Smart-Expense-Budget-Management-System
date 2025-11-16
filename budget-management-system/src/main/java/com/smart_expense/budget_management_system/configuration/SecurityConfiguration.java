@@ -28,7 +28,7 @@ public class SecurityConfiguration {
                                     var authorities=authentication.getAuthorities();
                                     String redirectUrl="/user/dashboard";
                                     if(authorities.stream().anyMatch(a->a.getAuthority().equals("ROLE_ADMIN"))){
-                                        redirectUrl="/admin/dashboard";
+                                        redirectUrl="/admin/home";
                                     }
                                     else if(authorities.stream().anyMatch(a->a.getAuthority().equals("ROLE_USER"))){
                                         redirectUrl="/user/dashboard";

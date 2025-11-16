@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -24,23 +25,6 @@ public class AdminDashboardController {
         this.categoryService=categoryService;
     }
 
-    @GetMapping("/dashboard")
-    public String showAdminDashboardPage(Model model, Principal principal){
-       String username=principal.getName();
-       Optional<User> user=userService.findUserByUserName(username);
-       model.addAttribute("user",user);
-        return "admin/dashboard";
-    }
-
-    @GetMapping("/home/users")
-    public String showAdminUsersPage(Model model){
-        Integer totalUsers= userService.getTotalUsers();
-        Integer totalCategories= categoryService.getTotalCategories();
-        model.addAttribute("totalUsers",totalUsers);
-        model.addAttribute("totalCategories",totalCategories);
-        return "admin/users";
-    }
-
     @GetMapping("/budget")
     public String showAdminBudgetPage(){
         return "admin/budget";
@@ -49,14 +33,15 @@ public class AdminDashboardController {
     public String showAdminExpensePage(){
         return "admin/expense";
     }
-    @GetMapping("/settings")
-    public String showAdminSettingsPage(){
-        return "admin/settings";
-    }
     @GetMapping("/home")
-    public String showAdminHomePage(Model model){
+    public String showAdminHomePage(Model model,Principal principal){
+        String username=principal.getName();
+        Optional<User> user=userService.findUserByUserName(username);
+        List<User> listUsers=userService.getAllUsers();
         Integer totalUsers= userService.getTotalUsers();
         Integer totalCategories= categoryService.getTotalCategories();
+        model.addAttribute("users",listUsers);
+        model.addAttribute("users",user);
         model.addAttribute("totalUsers",totalUsers);
         model.addAttribute("totalCategories",totalCategories);
         return "admin/home";

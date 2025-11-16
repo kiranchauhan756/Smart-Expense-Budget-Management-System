@@ -12,6 +12,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -43,7 +44,9 @@ public class DataInitializer implements CommandLineRunner {
 
         //Adding default Admin
         if(userRepository.findByUsername("admin").isEmpty()){
-            User user=new User("budgetIQAdmin@gmail.com", passwordEncoder.encode( "admin"), "admin", true, LocalDateTime.now(),LocalDateTime.now());
+            User user=new User(LocalDate.of(1999,8,11),"budgetIQAdmin@gmail.com", passwordEncoder.encode( "admin"), "admin", true, LocalDateTime.now(),LocalDateTime.now());
+            System.out.println(user.getDob());
+            user.setPhoneNumber("9368045213");
             user.setRoles(List.of(userRole.get(),adminRole.get()));
             userRepository.save(user);
         }
