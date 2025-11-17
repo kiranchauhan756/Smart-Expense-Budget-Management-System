@@ -62,14 +62,14 @@ public class UserService {
     public void updateUser(long id,User user){
         Optional<User> user1=findUserById(id);
         if(user1.isPresent()) {
-            user1.get().setLastModifiedDate(LocalDateTime.now());
-            user1.get().setUsername(user.getUsername());
-            user1.get().setEmail(user.getEmail());
-            user1.get().setActive(user.isActive());
+            User existingUser=user1.get();
+            existingUser.setLastModifiedDate(LocalDateTime.now());
+            existingUser.setUsername(user.getUsername());
+            existingUser.setEmail(user.getEmail());
+            existingUser.setActive(user.isActive());
             userRepository.save(user1.get());
 
         }
-
     }
     public void deleteUser(long id){
         Optional<User> user=userRepository.findById(id);

@@ -3,13 +3,18 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{user/dashboard}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous">
 <head>
     <title>Category Page</title>
 </head>
 <body>
 <div layout:fragment="content">
     <div class="container mt-3">
-        <a th:href="@{/admin/category/addCategory}" class="btn btn-primary btn-sm mb-3">Add Category</a>
+        <a th:href="@{/user/category/addCategory}" class="btn btn-primary btn-sm mb-3">Add Category</a>
         <table class="table table-striped table-hover align-middle">
             <thead class="table-secondary">
             <tr>

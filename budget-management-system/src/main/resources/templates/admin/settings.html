@@ -76,8 +76,8 @@
             <div class="card-body">
 
                 <div class="d-flex align-items-center">
-                    <img  th:src="@{/images/account.png}" class="rounded-circle me-3"
-                         style="width: 90px; height: 90px; object-fit: cover;" alt="Profile" src="">
+                    <img  th:src="@{'/images/'+${user.profilePic}}" class="rounded-circle me-3"
+                         style="width: 90px; height: 90px; object-fit: cover;" alt="Profile">
 
                     <div>
                         <label class="form-label">Upload New Picture</label>

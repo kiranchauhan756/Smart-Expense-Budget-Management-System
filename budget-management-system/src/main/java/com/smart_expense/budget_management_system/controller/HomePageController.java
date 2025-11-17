@@ -25,6 +25,7 @@ public class HomePageController {
         model.addAttribute("user", new User());
         return "home/signUp";
     }
+
     @RequestMapping("/logout")
     public String logoutPage() {
         return "redirect:/login?logout";
