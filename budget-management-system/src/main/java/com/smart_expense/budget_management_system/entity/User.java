@@ -48,7 +48,7 @@ public class User {
     @Column(length=10,nullable = false)
     @Size(min=10,max=10)
     private String phoneNumber;
-    private String profilePic;
+    private String profilePicture;
     @Column(nullable = false)
     private LocalDate dob;
 

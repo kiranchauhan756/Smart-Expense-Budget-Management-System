@@ -37,16 +37,7 @@ public class AdminUserController {
        return "admin/addUsers";
     }
 
-    @GetMapping("/updateUser")
-    public String showAdminUserEdit(@RequestParam("userId") long id,Model model){
-           Optional<User> user=userService.findUserById(id);
-           if(user.isPresent()){
-            userService.updateUser(id,user.get());
-            model.addAttribute("user",user.get());
-            return "admin/addUsers";
-        }
-       return "admin/users";
-    }
+
     @GetMapping("/deleteUser")
     public String deleteAdminUser(@RequestParam("userId") long id,Model model){
        Optional<User> user=userService.findUserById(id);

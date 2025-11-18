@@ -11,7 +11,7 @@ import java.security.Principal;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping
 public class UserSettingsController {
     private final UserService userService;
 
@@ -19,7 +19,6 @@ public class UserSettingsController {
         this.userService = userService;
     }
 
-    @GetMapping("/settings")
     public String showUserSettingsPage(Principal principal, Model model){
         Optional<User> user=userService.findUserByUserName(principal.getName());
         user.ifPresent(value -> model.addAttribute("user", value));

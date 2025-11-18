@@ -2,7 +2,7 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{admin/dashboard}">
+      layout:decorate="~{admin/dashboard}"  >
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -20,107 +20,87 @@
 </head>
 <body>
 <div layout:fragment="content">
-<div class="container mt-4">
-    <form th:action="@{/admin/settings}" th:object="${user}" method="post" enctype="multipart/form-data">
+    <div class="container mt-4">
+        <form th:action="@{/admin/settings}" th:object="${user}" method="post" enctype="multipart/form-data">
 
-        <!-- GENERAL SETTINGS CARD -->
-        <div class="card mb-4">
-            <div class="card-header fw-bold">General Settings</div>
-            <div class="card-body row g-3">
-                <input type="hidden" th:field="*{id}">
+            <div class="card mb-4">
+                <div class="card-header fw-bold">General Settings</div>
+                <div class="card-body row g-3">
 
-                <!-- Username (Not Editable or Editable Optional) -->
-                <div class="col-md-6">
-                    <label class="form-label">User Name</label>
-                    <input type="text" class="form-control" th:field="*{username}" readonly>
-                </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" th:field="*{email}">
+                    </div>
 
-                <!-- Email (Required) -->
-                <div class="col-md-6">
-                    <label class="form-label">Email <span class="text-danger">*</span></label>
-                    <input type="email" class="form-control" th:field="*{email}" required>
-                </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Phone Number</label>
+                        <input type="text" class="form-control" th:field="*{phoneNumber}">
+                    </div>
 
-                <!-- Alternate Email (Optional) -->
-                <div class="col-md-6">
-                    <label class="form-label">Alternate Email</label>
-                    <input type="email" class="form-control" th:field="*{alternateEmail}">
-                </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Gender</label>
+                        <select class="form-select" th:field="*{gender}">
+                            <option value="">Select</option>
+                            <option value="MALE">Male</option>
+                            <option value="FEMALE">Female</option>
+                            <option value="OTHER">Other</option>
+                        </select>
+                    </div>
 
-                <!-- Phone Number (Required) -->
-                <div class="col-md-6">
-                    <label class="form-label">Phone Number <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" th:field="*{phoneNumber}" required>
-                </div>
-
-                <!-- Gender (Optional) -->
-                <div class="col-md-6">
-                    <label class="form-label">Gender</label>
-                    <select class="form-select" th:field="*{gender}">
-                        <option value="">Select</option>
-                        <option value="MALE">Male</option>
-                        <option value="FEMALE">Female</option>
-                        <option value="OTHER">Other</option>
-                    </select>
-                </div>
-                <div class="col-md-6">
-                    <label class="form-label">Date of Birth</label>
-                    <input type="date" class="form-control" th:value="${user.dob}">
-                </div>
-            </div>
-        </div>
-
-        <!-- PROFILE PICTURE -->
-        <div class="card mb-4">
-            <div class="card-header fw-bold">Profile Picture</div>
-            <div class="card-body">
-
-                <div class="d-flex align-items-center">
-                    <img  th:src="@{'/images/'+${user.profilePic}}" class="rounded-circle me-3"
-                         style="width: 90px; height: 90px; object-fit: cover;" alt="Profile">
-
-                    <div>
-                        <label class="form-label">Upload New Picture</label>
-                        <input type="file" class="form-control mb-2" name="profilePic">
-
-                        <a th:href="@{/settings/deleteProfilePic}"
-                           class="btn btn-outline-danger btn-sm">Delete Picture</a>
+                    <div class="col-md-6">
+                        <label class="form-label">Date of Birth</label>
+                        <input type="date" class="form-control" th:value="*{dob}">
                     </div>
                 </div>
-
             </div>
-        </div>
 
-        <!-- PASSWORD SETTINGS -->
-        <div class="card mb-4">
-            <div class="card-header fw-bold">Change Password</div>
-            <div class="card-body row g-3">
-
-                <div class="col-md-4">
-                    <label class="form-label">Old Password <span class="text-danger">*</span></label>
-                    <input type="password" class="form-control" name="oldPassword">
+            <div class="card mb-4">
+                <div class="card-header fw-bold">Profile Picture</div>
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <img th:src="@{'/images/' + ${user.profilePicture}}"
+                             th:if="${user.profilePicture != null}"
+                             class="rounded-circle me-3" style="width: 90px; height: 90px; object-fit: cover;" alt="Profile">
+                        <div>
+                            <label class="form-label">Upload New Picture</label>
+                            <input type="file" class="form-control mb-2" name="profilePic">
+                            <a th:href="@{/settings/updateProfilePic}" class="btn btn-outline-primary btn-sm">
+                                Upload Picture
+                            </a>
+                            <a th:href="@{/settings/deleteProfilePic}" class="btn btn-outline-danger btn-sm">
+                                Delete Picture
+                            </a>
+                        </div>
+                    </div>
                 </div>
-
-                <div class="col-md-4">
-                    <label class="form-label">New Password <span class="text-danger">*</span></label>
-                    <input type="password" class="form-control" name="newPassword">
-                </div>
-
-                <div class="col-md-4">
-                    <label class="form-label">Verify New Password <span class="text-danger">*</span></label>
-                    <input type="password" class="form-control" name="confirmPassword">
-                </div>
-
             </div>
-        </div>
 
+            <div class="card mb-4">
+                <div class="card-header fw-bold">Change Password</div>
+                <div class="card-body row g-3">
+                    <div class="col-md-4">
+                        <label class="form-label">Old Password</label>
+                        <input type="password" class="form-control" name="oldPassword">
+                    </div>
 
-        <!-- SAVE BUTTON -->
-        <div class="text-end mb-5">
-            <button type="submit" class="btn btn-primary px-4">Save Changes</button>
-        </div>
+                    <div class="col-md-4">
+                        <label class="form-label">New Password</label>
+                        <input type="password" class="form-control" th:value="newPassword">
+                    </div>
 
-    </form>
+                    <div class="col-md-4">
+                        <label class="form-label">Verify New Password</label>
+                        <input type="password" class="form-control" name="confirmPassword">
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-end mb-5">
+                <button type="submit" class="btn btn-primary px-4">Save Changes</button>
+            </div>
+
+        </form>
+    </div>
 </div>
 
 </body>
