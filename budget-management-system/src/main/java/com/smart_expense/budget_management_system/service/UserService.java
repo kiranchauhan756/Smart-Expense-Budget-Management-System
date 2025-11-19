@@ -91,7 +91,7 @@ public class UserService {
         throw new UserNotFoundException("No User found with this id");
     }
 
-    public boolean updateUser( User dbUser, MultipartFile profilePic,
+    public boolean updateUser( User dbUser,
                                String newPassword, String confirmPassword) throws IOException {
         boolean passwordChanged = false;
         if (newPassword != null && !newPassword.isEmpty()) {

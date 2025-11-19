@@ -37,7 +37,6 @@ public class AdminUserController {
        return "admin/addUsers";
     }
 
-
     @GetMapping("/deleteUser")
     public String deleteAdminUser(@RequestParam("userId") long id,Model model){
        Optional<User> user=userService.findUserById(id);

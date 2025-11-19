@@ -49,6 +49,7 @@ public class User {
     @Column(length=10,nullable = false)
     @Size(min=10,max=10)
     private String phoneNumber;
+    @Column(name="profilePicture")
     private String profilePicture;
     @Column(nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -79,3 +80,4 @@ public class User {
     }
 
 }
+

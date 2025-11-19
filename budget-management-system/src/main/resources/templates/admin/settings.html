@@ -68,9 +68,17 @@
                 <div class="card-header fw-bold">Profile Picture</div>
                 <div class="card-body">
                     <div class="d-flex align-items-center mb-3">
-                        <img th:if="${user.profilePicture == null}"
+                        <img th:if="${user != null and user.profilePicture != null}"
+                             th:src="@{/images/{file}(file=${user.profilePicture})}"
+                             class="rounded-circle me-2"
+                             style="width: 40px; height: 40px; object-fit: cover;"
+                             alt="">
+
+                        <img th:if="${user == null or user.profilePicture == null}"
                              th:src="@{/images/account.png}"
-                             class="rounded-circle me-3" style="width: 90px; height: 90px; object-fit: cover;" alt="Profile" src="">
+                             class="rounded-circle me-2"
+                             style="width: 40px; height: 40px; object-fit: cover;"
+                             alt="">
 
                         <div>
                             <label class="form-label">Upload New Picture</label>
@@ -78,8 +86,8 @@
                         </div>
                     </div>
                     <div>
-                        <button type="submit" class="btn btn-outline-primary btn-sm">Upload Picture</button>
-                        <button type="submit" class="btn btn-outline-danger btn-sm">Delete Picture</button>
+                        <button type="submit" name="action" value="upload" class="btn btn-outline-primary btn-sm">Upload Picture</button>
+                        <button type="submit" name="action" value="delete" class="btn btn-outline-danger btn-sm">Delete Picture</button>
                     </div>
                 </div>
             </div>
@@ -101,7 +109,7 @@
             </div>
 
             <div class="text-end mb-5">
-                <button type="submit" class="btn btn-primary px-4">Save</button>
+                <button type="submit" name="action" value="save" class="btn btn-primary px-4">Save</button>
             </div>
 
         </form>
