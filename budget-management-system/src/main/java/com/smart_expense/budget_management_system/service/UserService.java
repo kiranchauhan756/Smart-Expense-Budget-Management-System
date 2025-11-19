@@ -2,6 +2,7 @@ package com.smart_expense.budget_management_system.service;
 
 import com.smart_expense.budget_management_system.entity.Role;
 import com.smart_expense.budget_management_system.entity.User;
+import com.smart_expense.budget_management_system.exception.PasswordException;
 import com.smart_expense.budget_management_system.exception.UserAlreadyExistException;
 import com.smart_expense.budget_management_system.exception.UserNotFoundException;
 import com.smart_expense.budget_management_system.repository.RoleRepository;
@@ -90,61 +91,17 @@ public class UserService {
         throw new UserNotFoundException("No User found with this id");
     }
 
-    public void updateUser(User formUser,
-                           MultipartFile profilePic,
-                           String oldPassword,
-                           String newPassword,
-                           String confirmPassword) throws IOException {
-
-        User existingUser = userRepository.findById(formUser.getId())
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        existingUser.setEmail(formUser.getEmail());
-        existingUser.setAlternateEmail(formUser.getAlternateEmail());
-        existingUser.setGender(formUser.getGender());
-        existingUser.setPhoneNumber(formUser.getPhoneNumber());
-
-        if (formUser.getDob() != null) {
-            existingUser.setDob(formUser.getDob());
-        }
-
-
-        // ---- PROFILE PIC ----
-        if (profilePic != null && !profilePic.isEmpty()) {
-
-            String fileName = existingUser.getId() + "_" + profilePic.getOriginalFilename();
-            Path uploadPath = Paths.get("src/main/resources/static/images/" + fileName);
-
-            Files.copy(profilePic.getInputStream(), uploadPath, StandardCopyOption.REPLACE_EXISTING);
-
-            existingUser.setProfilePicture(fileName);
-        }
-
-        // ---- PASSWORD CHANGE ----
-        // Only change if oldPassword is given
-        if (oldPassword != null && !oldPassword.isEmpty()) {
-
-            // 1. Old password must match existing one
-            if (!passwordEncoder.matches(oldPassword, existingUser.getPassword())) {
-                throw new RuntimeException("Old password is incorrect!");
-            }
-
-            // 2. newPassword must not be empty
-            if (newPassword == null || newPassword.isEmpty()) {
-                throw new RuntimeException("New password cannot be empty!");
-            }
-
-            // 3. newPassword and confirmPassword must match
+    public boolean updateUser( User dbUser, MultipartFile profilePic,
+                               String newPassword, String confirmPassword) throws IOException {
+        boolean passwordChanged = false;
+        if (newPassword != null && !newPassword.isEmpty()) {
             if (!newPassword.equals(confirmPassword)) {
-                throw new RuntimeException("New and confirm password do not match!");
+                throw new PasswordException("New and confirm password do not match!");
             }
-
-            // 4. Save only newPassword (encoded)
-            existingUser.setPassword(passwordEncoder.encode(newPassword));
+            dbUser.setPassword(passwordEncoder.encode(newPassword));
+            passwordChanged = true;
         }
-
-        // --- SAVE ---
-        userRepository.save(existingUser);
+        userRepository.save(dbUser);
+        return passwordChanged;
     }
-
 }

@@ -1,6 +1,7 @@
 package com.smart_expense.budget_management_system.controller;
 
 import com.smart_expense.budget_management_system.entity.User;
+import com.smart_expense.budget_management_system.exception.PasswordException;
 import com.smart_expense.budget_management_system.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -40,24 +41,30 @@ public class AdminSettingsController {
         }
         return "admin/settings";
     }
-
     @PostMapping
-    public String updateAdminSettings(
-            Principal principal,
-            @ModelAttribute("user") User user,
-            @RequestParam(value = "profilePic", required = false) MultipartFile profilePic,
-            @RequestParam(value = "oldPassword", required = false) String oldPassword,
-            @RequestParam(value = "newPassword", required = false) String newPassword,
-            @RequestParam(value = "confirmPassword", required = false) String confirmPassword,
-            RedirectAttributes redirectAttributes) throws IOException {
-
-        User existingUser = userService.findUserByUserName(principal.getName()).get();
-        user.setId(existingUser.getId());
-
-        userService.updateUser(user, profilePic, oldPassword, newPassword, confirmPassword);
-
-        redirectAttributes.addFlashAttribute("success", "Settings updated successfully!");
+    public String updateAdminSettings( Principal principal, @ModelAttribute("user") User formUser,
+                                       @RequestParam(value = "profilePic", required = false)
+                                       MultipartFile profilePic, @RequestParam(value = "newPassword", required = false)
+                                       String newPassword, @RequestParam(value = "confirmPassword", required = false)
+                                       String confirmPassword, RedirectAttributes redirectAttributes)
+            throws IOException {
+        Optional<User> optUser = userService.findUserByUserName(principal.getName());
+        if(optUser.isPresent()) {
+            User dbUser = optUser.get();
+            dbUser.setEmail(formUser.getEmail());
+            dbUser.setPhoneNumber(formUser.getPhoneNumber());
+            dbUser.setGender(formUser.getGender());
+            dbUser.setDob(formUser.getDob());
+            try {
+                boolean passwordChanged = userService.updateUser(dbUser, profilePic, newPassword, confirmPassword);
+                if (passwordChanged) {
+                    redirectAttributes.addFlashAttribute("success", "Password changed successfully!");
+                } else {
+                redirectAttributes.addFlashAttribute("success", "Profile updated successfully!");
+                } }
+            catch (PasswordException e) {
+                redirectAttributes.addFlashAttribute("error", e.getMessage());
+            } }
         return "redirect:/admin/settings";
     }
-
 }

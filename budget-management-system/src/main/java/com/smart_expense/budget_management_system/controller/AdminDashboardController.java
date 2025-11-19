@@ -36,12 +36,13 @@ public class AdminDashboardController {
     @GetMapping("/home")
     public String showAdminHomePage(Model model,Principal principal){
         String username=principal.getName();
-        Optional<User> user=userService.findUserByUserName(username);
+        Optional<User> optionalUser=userService.findUserByUserName(username);
+        User user = optionalUser.orElse(new User());
         List<User> listUsers=userService.getAllUsers();
         Integer totalUsers= userService.getTotalUsers();
         Integer totalCategories= categoryService.getTotalCategories();
         model.addAttribute("users",listUsers);
-        model.addAttribute("users",user);
+        model.addAttribute("user",user);
         model.addAttribute("totalUsers",totalUsers);
         model.addAttribute("totalCategories",totalCategories);
         return "admin/home";

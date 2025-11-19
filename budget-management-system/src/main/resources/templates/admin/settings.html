@@ -2,30 +2,39 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{admin/dashboard}"  >
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
-      crossorigin="anonymous">
+      layout:decorate="~{admin/dashboard}">
 <head>
-    <title>Settings Page</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Settings</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+          crossorigin="anonymous">
     <style>
         body { font-family: 'Poppins', sans-serif; }
-        .circle-number {
-            width: 50px;
-            height: 50px;
-        }
     </style>
 </head>
 <body>
 <div layout:fragment="content">
     <div class="container mt-4">
+
+        <!-- Success/Error Messages -->
+        <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+        <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
         <form th:action="@{/admin/settings}" th:object="${user}" method="post" enctype="multipart/form-data">
 
+            <!-- General Settings -->
             <div class="card mb-4">
                 <div class="card-header fw-bold">General Settings</div>
                 <div class="card-body row g-3">
+
+                    <div class="col-md-6">
+                        <label class="form-label">Username</label>
+                        <input type="text" class="form-control" th:field="*{username}" readonly>
+                    </div>
 
                     <div class="col-md-6">
                         <label class="form-label">Email</label>
@@ -49,43 +58,39 @@
 
                     <div class="col-md-6">
                         <label class="form-label">Date of Birth</label>
-                        <input type="date" class="form-control" th:value="*{dob}">
+                        <input type="date" class="form-control" th:field="*{dob}">
                     </div>
                 </div>
             </div>
 
+            <!-- Profile Picture -->
             <div class="card mb-4">
                 <div class="card-header fw-bold">Profile Picture</div>
                 <div class="card-body">
-                    <div class="d-flex align-items-center">
-                        <img th:src="@{'/images/' + ${user.profilePicture}}"
-                             th:if="${user.profilePicture != null}"
-                             class="rounded-circle me-3" style="width: 90px; height: 90px; object-fit: cover;" alt="Profile">
+                    <div class="d-flex align-items-center mb-3">
+                        <img th:if="${user.profilePicture == null}"
+                             th:src="@{/images/account.png}"
+                             class="rounded-circle me-3" style="width: 90px; height: 90px; object-fit: cover;" alt="Profile" src="">
+
                         <div>
                             <label class="form-label">Upload New Picture</label>
                             <input type="file" class="form-control mb-2" name="profilePic">
-                            <a th:href="@{/settings/updateProfilePic}" class="btn btn-outline-primary btn-sm">
-                                Upload Picture
-                            </a>
-                            <a th:href="@{/settings/deleteProfilePic}" class="btn btn-outline-danger btn-sm">
-                                Delete Picture
-                            </a>
                         </div>
+                    </div>
+                    <div>
+                        <button type="submit" class="btn btn-outline-primary btn-sm">Upload Picture</button>
+                        <button type="submit" class="btn btn-outline-danger btn-sm">Delete Picture</button>
                     </div>
                 </div>
             </div>
 
+            <!-- Change Password -->
             <div class="card mb-4">
                 <div class="card-header fw-bold">Change Password</div>
                 <div class="card-body row g-3">
                     <div class="col-md-4">
-                        <label class="form-label">Old Password</label>
-                        <input type="password" class="form-control" name="oldPassword">
-                    </div>
-
-                    <div class="col-md-4">
                         <label class="form-label">New Password</label>
-                        <input type="password" class="form-control" th:value="newPassword">
+                        <input type="password" class="form-control" name="newPassword">
                     </div>
 
                     <div class="col-md-4">
@@ -96,12 +101,15 @@
             </div>
 
             <div class="text-end mb-5">
-                <button type="submit" class="btn btn-primary px-4">Save Changes</button>
+                <button type="submit" class="btn btn-primary px-4">Save</button>
             </div>
 
         </form>
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
 </body>
 </html>
