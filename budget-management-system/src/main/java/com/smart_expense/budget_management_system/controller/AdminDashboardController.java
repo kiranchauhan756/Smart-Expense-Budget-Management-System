@@ -42,7 +42,7 @@ public class AdminDashboardController {
         Integer totalUsers= userService.getTotalUsers();
         Integer totalCategories= categoryService.getTotalCategories();
         model.addAttribute("users",listUsers);
-        model.addAttribute("user",user);
+        model.addAttribute("users",user);
         model.addAttribute("totalUsers",totalUsers);
         model.addAttribute("totalCategories",totalCategories);
         return "admin/home";

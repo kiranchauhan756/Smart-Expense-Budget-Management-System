@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,9 +26,13 @@ public class AdminUserController {
     }
 
     @GetMapping("/users")
-    public String showAdminUsersPage(Model model){
-       List<User> userList=userService.getAllUsers();
-       model.addAttribute("user",userList);
+    public String showAdminUsersPage(Model model, Principal principal){
+        Optional<User> user=userService.findUserByUserName(principal.getName());
+        if(user.isPresent()) {
+            model.addAttribute("user",user.get());
+            List<User> userList = userService.getAllUsers();
+            model.addAttribute("users", userList);
+        }
        return "admin/users";
     }
 
