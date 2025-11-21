@@ -4,6 +4,7 @@ import com.smart_expense.budget_management_system.entity.User;
 import com.smart_expense.budget_management_system.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,5 +23,9 @@ public class UserController {
     public String saveUser(@ModelAttribute("user") User user){
         userService.saveUser(user);
         return "home/login";
+    }
+    @GetMapping("/settings")
+    public String home(){
+        return "home";
     }
 }
