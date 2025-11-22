@@ -24,8 +24,5 @@ public class UserController {
         userService.saveUser(user);
         return "home/login";
     }
-    @GetMapping("/settings")
-    public String home(){
-        return "home";
-    }
+
 }
