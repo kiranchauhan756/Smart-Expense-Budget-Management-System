@@ -29,10 +29,7 @@ public class AdminDashboardController {
     public String showAdminBudgetPage(){
         return "admin/budget";
     }
-    @GetMapping("/expense")
-    public String showAdminExpensePage(){
-        return "admin/expense";
-    }
+
     @GetMapping("/home")
     public String showAdminHomePage(Model model,Principal principal){
         String username=principal.getName();

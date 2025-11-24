@@ -20,6 +20,7 @@
             <tr>
                 <th>Title</th>
                 <th>Amount</th>
+                <th>Category</th>
                 <th>Date</th>
                 <th>Action</th>
             </tr>
@@ -28,7 +29,8 @@
             <tr th:each="tempExpense :${expenses}">
                 <td th:text="${tempExpense.title}"></td>
                 <td th:text="${tempExpense.amount}"></td>
-                <td th:text="${tempExpense.date}"></td>
+                <td th:text="${tempExpense.category != null ? tempExpense.category.name : 'No Category'}"></td>
+                <td th:text="${tempExpense.expenseDate}"></td>
                 <td><a th:href="@{/admin/expense/edit(expenseId=${tempExpense.id})}" class="btn btn-info btn-sm mb-3" >
                     Edit</a>
                     <a th:href="@{/admin/expense/delete(expenseId=${tempExpense.id})}"

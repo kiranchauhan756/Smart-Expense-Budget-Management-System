@@ -1,6 +1,7 @@
 package com.smart_expense.budget_management_system.exception;
 
 import com.smart_expense.budget_management_system.entity.Category;
+import com.smart_expense.budget_management_system.entity.Expenses;
 import com.smart_expense.budget_management_system.entity.User;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -32,5 +33,12 @@ public class GlobalExceptionHandler {
         model.addAttribute("category",new Category());
         model.addAttribute("message",ex.getMessage());
         return "admin/addCategory";
+    }
+
+    @ExceptionHandler(ExpenseNotFoundException.class)
+    public String handleExpenseNotFoundException(ExpenseNotFoundException ex,Model model){
+        model.addAttribute("expense",new Expenses());
+        model.addAttribute("message",ex.getMessage());
+        return "admin/expense";
     }
 }
