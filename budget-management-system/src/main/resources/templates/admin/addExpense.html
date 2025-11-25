@@ -18,7 +18,7 @@
   <div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
     <div class="p-4 bg-light rounded-4 shadow-sm" style="width: 100%; max-width: 500px;">
 
-      <h4 class="mb-4 text-center">Add Category</h4>
+      <h4 class="mb-4 text-center">Add Expense</h4>
 
       <div th:if="${message}" class="alert alert-danger text-center py-2" role="alert"
            th:text="${message}">
@@ -31,6 +31,11 @@
           <label class="form-label fw-semibold">Expense Title</label>
           <input type="text" th:field="*{title}" class="form-control rounded-3"
                  placeholder="Enter Expense Title" required>
+          <small class="text-danger d-flex align-items-center mt-1"
+                 th:if="${errors != null and errors['title'] != null}">
+            <i class="bi bi-exclamation-circle-fill me-1"></i>
+            <span th:text="${errors['title']}"></span>
+          </small>
         </div>
 
         <div class="mb-3">
@@ -38,23 +43,41 @@
           <textarea th:field="*{description}" class="form-control rounded-3" rows="3"
                     placeholder="Enter short description" required></textarea>
         </div>
-        <select name="category" th:field="*{category}">
-          <option value="">Select Category</option>
-          <option th:each="cat : ${categories}"
-                  th:value="${cat.id}"
-                  th:text="${cat.name}">
-          </option>
-        </select>
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Category</label>
+          <select th:field="*{category}" class="form-select rounded-3">
+            <option value="">Select Category</option>
+            <option th:each="cat : ${categories}"
+                    th:value="${cat.id}"
+                    th:text="${cat.name}">
+            </option>
+          </select>
+
+          <div class="text-danger mt-1"
+               th:if="${errors != null and errors['category'] != null}"
+               th:text="${errors['category']}">
+          </div>
+        </div>
         <div class="mb-3">
           <label class="form-label fw-semibold">Amount</label>
-          <input type="text" th:field="*{amount}" class="form-control rounded-3"
+          <input type="number" th:field="*{amount}" class="form-control rounded-3"
                  placeholder="Enter Amount" required>
+          <small class="text-danger d-flex align-items-center mt-1"
+                 th:if="${errors != null and errors['amount'] != null}">
+            <i class="bi bi-exclamation-circle-fill me-1"></i>
+            <span th:text="${errors['amount']}"></span>
+          </small>
         </div>
 
         <div class="mb-3">
-          <label class="form-label fw-semibold">Date</label>
+          <label class="form-label fw-semibold">Expense Date</label>
           <input type="date" th:field="*{expenseDate}" class="form-control rounded-3" required
           placeholder="Enter Expense date">
+          <small class="text-danger d-flex align-items-center mt-1"
+                 th:if="${errors != null and errors['expenseDate'] != null}">
+            <i class="bi bi-exclamation-circle-fill me-1"></i>
+            <span th:text="${errors['expenseDate']}"></span>
+          </small>
 
         </div>
 

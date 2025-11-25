@@ -2,6 +2,7 @@ package com.smart_expense.budget_management_system.controller;
 
 import com.smart_expense.budget_management_system.entity.Category;
 import com.smart_expense.budget_management_system.service.CategoryService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,7 +27,7 @@ public class AdminCategoryController {
 
 
     @PostMapping("/save")
-    public String addCategory(@ModelAttribute("category") Category category){
+    public String addCategory(@Valid @ModelAttribute("category") Category category){
         categoryService.saveCategory(category);
         return "redirect:/admin/category";
 
@@ -46,7 +47,7 @@ public class AdminCategoryController {
         return "admin/category";
     }
     @GetMapping("/edit")
-    public String showAdminCategoryUpdatePage(@RequestParam("categoryId") long id,Model model){
+    public String showAdminCategoryUpdatePage(@RequestParam("categoryId") long id, Model model){
         Optional<Category> category=categoryService.findCategoryById(id);
         if(category.isPresent()){
             model.addAttribute("category",category.get());

@@ -4,8 +4,12 @@ import com.smart_expense.budget_management_system.entity.Category;
 import com.smart_expense.budget_management_system.entity.Expenses;
 import com.smart_expense.budget_management_system.entity.User;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -41,4 +45,28 @@ public class GlobalExceptionHandler {
         model.addAttribute("message",ex.getMessage());
         return "admin/expense";
     }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public String handleValidationExceptions(MethodArgumentNotValidException ex, Model model) {
+
+        Map<String, String> errors = new HashMap<>();
+
+        ex.getBindingResult().getFieldErrors().forEach(error -> errors.put(error.getField(), error.getDefaultMessage()));
+
+        // Category Validation errors
+        if (ex.getBindingResult().getTarget() instanceof Category) {
+            model.addAttribute("category", new Category());
+            model.addAttribute("errors", errors);
+            return "admin/addCategory";
+        }
+
+        // Expense Validation errors
+        if (ex.getBindingResult().getTarget() instanceof Expenses) {
+            model.addAttribute("expense", new Expenses());
+            model.addAttribute("errors", errors);
+            return "admin/expense";
+        }
+        return "admin/expense";
+    }
+
 }

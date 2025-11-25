@@ -30,10 +30,30 @@
           <textarea th:field="*{description}" class="form-control rounded-3" rows="3" placeholder="Enter short description" required></textarea>
         </div>
 
+        <div class="mb-3">
+        <label class="form-label fw-semibold">Category</label>
+        <select th:field="*{category}" class="form-select rounded-3" required>
+          <option value="" disabled>-- Select Category --</option>
+          <option th:each="cat : ${categories}"
+                  th:value="${cat.id}"
+                  th:text="${cat.name}"
+                  th:selected="${cat.id == expenses.category.id}">
+          </option>
+        </select>
+        </div>
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Amount</label>
+          <input type="number" th:field="*{amount}" class="form-control rounded-3"  placeholder="Enter Amount" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Expense Date</label>
+          <input type="date" th:field="*{expenseDate}" class="form-control rounded-3"  placeholder="Enter expense date" required>
+        </div>
+
         <!-- Buttons -->
         <div class="d-flex gap-2">
           <button type="submit" class="btn btn-success">Update</button>
-          <a th:href="@{/admin/category}" class="btn btn-secondary">Back</a>
+          <a th:href="@{/admin/expense}" class="btn btn-secondary">Back</a>
         </div>
       </form>
     </div>

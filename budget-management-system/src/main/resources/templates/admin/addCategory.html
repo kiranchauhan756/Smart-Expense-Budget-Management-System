@@ -31,6 +31,11 @@
           <label class="form-label fw-semibold">Category Name</label>
           <input type="text" th:field="*{name}" class="form-control rounded-3"
                  placeholder="Enter category name" required>
+          <small class="text-danger d-flex align-items-center mt-1"
+                 th:if="${errors != null}">
+            <i class="bi bi-exclamation-circle-fill me-1"></i>
+            <span th:text="${errors['name']}"></span>
+          </small>
         </div>
 
         <div class="mb-3">
