@@ -24,7 +24,7 @@
            th:text="${message}">
       </div>
 
-      <form th:action="@{/admin/category/save}" th:object="${category}" method="POST" novalidate>
+      <form th:action="@{/home/category/save}" th:object="${category}" method="POST" novalidate>
         <input type="hidden" th:field="*{id}" />
 
         <div class="mb-3">
@@ -46,7 +46,7 @@
 
         <div class="d-flex gap-2">
           <button type="submit" class="btn btn-primary">Save</button>
-          <a th:href="@{/admin/category}" class="btn btn-secondary">Back</a>
+          <a th:href="@{/home/category}" class="btn btn-secondary">Back</a>
         </div>
       </form>
     </div>

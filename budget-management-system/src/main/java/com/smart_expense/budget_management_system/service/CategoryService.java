@@ -26,21 +26,49 @@ public class CategoryService {
         this.userRepository=userRepository;
     }
 
-    public void saveCategory(Category category){
-        String username= SecurityContextHolder.getContext().getAuthentication().getName();
-        Optional<User> user=userRepository.findByUsername(username);
-        Optional<Category> category1 = categoryRepository.findByName(category.getName());
+    public void saveCategory(Category category) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        Optional<User> user = userRepository.findByUsername(username);
 
-        if(category1.isEmpty()) {
-            if (user.isPresent()) {
-                category.setDefaultCategory(false);
-                category.setDateDescription(new DateDescription(LocalDateTime.now(), user.get().getId(), user.get().getUsername(), LocalDateTime.now(), user.get().getUsername(), user.get().getId()));
-                categoryRepository.save(category);
-            }
-        }
-        else {
+        // Check if a category with the same name exists
+        Optional<Category> existingCategory = categoryRepository.findByName(category.getName());
+
+        if(category.getId() == null) {
+            // NEW category
+            if(existingCategory.isPresent()) {
                 throw new CategoryAlreadyExistsException("Category with this name already exists.");
             }
+
+            if(user.isPresent()) {
+                category.setDefaultCategory(false);
+                category.setDateDescription(new DateDescription(
+                        LocalDateTime.now(),
+                        user.get().getId(),
+                        user.get().getUsername(),
+                        LocalDateTime.now(),
+                        user.get().getUsername(),
+                        user.get().getId()
+                ));
+            }
+
+            categoryRepository.save(category);
+
+        } else {
+            // UPDATE category
+            if(existingCategory.isPresent() && !existingCategory.get().getId().equals(category.getId())) {
+                // Duplicate name for another category
+                throw new CategoryAlreadyExistsException("Category with this name already exists.");
+            }
+
+            // Safe to update
+            Category updatingCategory = categoryRepository.findById(category.getId())
+                    .orElseThrow(() -> new RuntimeException("Category not found"));
+
+            updatingCategory.setName(category.getName());
+            updatingCategory.setDescription(category.getDescription());
+
+            categoryRepository.save(updatingCategory);
+        }
     }
 
     public List<Category> getAllCategories(){

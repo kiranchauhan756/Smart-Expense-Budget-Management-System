@@ -30,13 +30,13 @@ public class GlobalExceptionHandler {
     public String handleCategoryAlreadyExistsException(CategoryAlreadyExistsException ex,Model model){
         model.addAttribute("category",new Category());
         model.addAttribute("message",ex.getMessage());
-        return "admin/addCategory";
+        return "home/addCategory";
     }
     @ExceptionHandler(CategoryNotFoundException.class)
     public String handleCategoryNotFoundException(CategoryNotFoundException ex,Model model){
         model.addAttribute("category",new Category());
         model.addAttribute("message",ex.getMessage());
-        return "admin/addCategory";
+        return "home/addCategory";
     }
 
     @ExceptionHandler(ExpenseNotFoundException.class)
@@ -57,7 +57,7 @@ public class GlobalExceptionHandler {
         if (ex.getBindingResult().getTarget() instanceof Category) {
             model.addAttribute("category", new Category());
             model.addAttribute("errors", errors);
-            return "admin/addCategory";
+            return "home/addCategory";
         }
 
         // Expense Validation errors

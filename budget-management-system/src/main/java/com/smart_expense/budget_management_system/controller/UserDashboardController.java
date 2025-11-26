@@ -26,10 +26,6 @@ public class UserDashboardController {
         user.ifPresent(model::addAttribute);
         return "user/dashboard";
     }
-    @GetMapping("/category")
-    public String showUserCategoryPage(){
-        return "user/category";
-    }
     @GetMapping("/budget")
     public String showUserBudgetPage(){
         return "user/budget";
@@ -37,10 +33,6 @@ public class UserDashboardController {
     @GetMapping("/expense")
     public String showUserExpensePage(){
         return "user/expense";
-    }
-    @GetMapping("/settings")
-    public String showUserSettingsPage(){
-        return "user/settings";
     }
     @GetMapping("/home")
     public String showUserHomePage(){

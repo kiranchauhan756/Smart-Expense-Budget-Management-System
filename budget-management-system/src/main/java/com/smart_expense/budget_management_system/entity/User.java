@@ -9,6 +9,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
@@ -55,6 +57,8 @@ public class User {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dob;
 
+    @OneToMany(mappedBy = "user")
+    private List<Category> category;
 
     @ManyToMany(fetch=FetchType.LAZY)
     //defining user_roles table with composite key user_id & role_id

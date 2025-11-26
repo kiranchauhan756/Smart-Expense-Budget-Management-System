@@ -17,7 +17,7 @@
     <div class="p-4 bg-light rounded-4 shadow-sm" style="width: 100%; max-width: 500px;">
       <h4 class="mb-4 text-center">Update Category</h4>
 
-      <form th:action="@{/admin/category/save}" th:object="${category}" method="POST">
+      <form th:action="@{/home/category/save}" th:object="${category}" method="POST">
         <input type="hidden" th:field="*{id}" />
 
         <div class="mb-3">
@@ -27,13 +27,13 @@
 
         <div class="mb-3">
           <label class="form-label fw-semibold">Description</label>
-          <textarea th:field="*{description}" class="form-control rounded-3" rows="3" placeholder="Enter short description" required></textarea>
+          <textarea th:field="*{description}" class="form-control rounded-3" rows="3" placeholder="Enter short description" ></textarea>
         </div>
 
         <!-- Buttons -->
         <div class="d-flex gap-2">
           <button type="submit" class="btn btn-success">Update</button>
-          <a th:href="@{/admin/category}" class="btn btn-secondary">Back</a>
+          <a th:href="@{/home/category}" class="btn btn-secondary">Back</a>
         </div>
       </form>
     </div>

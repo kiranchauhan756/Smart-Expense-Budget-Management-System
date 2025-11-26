@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="https://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{${layout}}">
+<head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous">
+
+    <title>Category Page</title>
+</head>
+<body>
+<div sec:authorize="hasRole('ADMIN')">
+    <div th:replace="admin/dashboard :: adminDashboard"></div>
+</div>
+
+<div sec:authorize="hasRole('USER')">
+    <div th:replace="user/dashboard :: userDashboard"></div>
+</div>
+<div layout:fragment="content">
+    <div class="container mt-3">
+        <a th:href="@{/home/category/addCategory}" class="btn btn-primary btn-sm mb-3">Add Category</a>
+        <table class="table table-striped table-hover align-middle">
+            <thead class="table-secondary">
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="tempCategory :${categories}">
+             <td th:text="${tempCategory.name}"></td>
+                <td th:text="${tempCategory.description}"></td>
+                <td>
+                    <!-- IF defaultCategory = true → Buttons disabled -->
+                    <span th:if="${tempCategory.defaultCategory}">
+        <button class="btn btn-info btn-sm mb-3" disabled>Edit</button>
+        <button class="btn btn-danger btn-sm mb-3" disabled>Delete</button>
+    </span>
+
+                    <!-- IF defaultCategory = false → Active buttons -->
+                    <span th:if="${!tempCategory.defaultCategory}">
+        <!-- Edit Button -->
+        <a th:href="@{/home/category/edit(categoryId=${tempCategory.id})}"
+           class="btn btn-info btn-sm mb-3">
+           Edit
+        </a>
+                        <a th:href="@{/home/category/delete(categoryId=${tempCategory.id})}"
+           onclick="return confirm('Are you sure you want to delete this category?')"
+           class="btn btn-danger btn-sm mb-3">
+           Delete
+        </a>
+    </span>
+                </td>
+            </tr>
+            </tbody>
+
+        </table>
+    </div>
+</div>
+</body>
+</html>
