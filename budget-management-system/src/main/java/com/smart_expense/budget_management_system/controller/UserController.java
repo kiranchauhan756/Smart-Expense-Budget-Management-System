@@ -22,6 +22,7 @@ public class UserController {
     @PostMapping
     public String saveUser(@ModelAttribute("user") User user){
         userService.saveUser(user);
+        System.out.println("user is created");
         return "home/login";
     }
 

@@ -23,6 +23,7 @@ public class HomePageController {
     @GetMapping("/signUp")
     public String signUpPage(Model model) {
         model.addAttribute("user", new User());
+        System.out.println("new user created");
         return "home/signUp";
     }
 

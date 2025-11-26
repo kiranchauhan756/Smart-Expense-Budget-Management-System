@@ -37,9 +37,10 @@ public class AdminUserController {
     }
 
     @GetMapping("/saveUser")
-    public String saveAdminUsers(@ModelAttribute("user") User user){
+    public String saveAdminUsers(@ModelAttribute("user") User user,Model model){
        userService.saveUser(user);
-       return "admin/addUsers";
+        model.addAttribute("message", "User saved successfully!");
+        return "admin/addUsers";
     }
 
     @GetMapping("/deleteUser")

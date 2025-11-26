@@ -1,9 +1,9 @@
 package com.smart_expense.budget_management_system.controller;
 
+import com.smart_expense.budget_management_system.entity.Role;
 import com.smart_expense.budget_management_system.entity.User;
 import com.smart_expense.budget_management_system.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,29 +20,43 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/admin/settings")
-public class AdminSettingsController {
+@RequestMapping("/home/settings")
+public class UserAdminSettingsController {
     private final UserService userService;
-    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public AdminSettingsController(UserService userService, PasswordEncoder passwordEncoder) {
+    public UserAdminSettingsController(UserService userService) {
         this.userService = userService;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping
     public String showAdminSettings(Principal principal, Model model) {
-        Optional<User> user = userService.findUserByUserName(principal.getName());
-        if (user.isPresent()) {
-            model.addAttribute("user", user.get());
-        } else {
-            model.addAttribute("user", new User());
+
+
+        boolean isAdmin = false;
+        model.addAttribute("user", new User());
+        if (principal != null) {
+            Optional<User> userOpt = userService.findUserByUserName(principal.getName());
+
+            if (userOpt.isPresent()) {
+                User user = userOpt.get();
+                model.addAttribute("user", user);
+
+                List<Role> roles = user.getRoles();
+                isAdmin = roles.stream()
+                        .anyMatch(r -> r.getName().equals("ADMIN"));
+
+            } else {
+                model.addAttribute("user", new User()); // fallback
+            }
         }
-        return "admin/settings";
+
+        model.addAttribute("layout", isAdmin ? "admin/dashboard" : "user/dashboard");
+        return "home/settings";
     }
     @PostMapping
     public String updateAdminSettings(
@@ -59,7 +73,6 @@ public class AdminSettingsController {
         if (optUser.isPresent()) {
             User dbUser = optUser.get();
 
-            // Update general profile info
             dbUser.setEmail(formUser.getEmail());
             dbUser.setPhoneNumber(formUser.getPhoneNumber());
             dbUser.setGender(formUser.getGender());
@@ -70,7 +83,7 @@ public class AdminSettingsController {
                 if ("save".equals(action) && newPassword != null && !newPassword.isEmpty()) {
                     if (!newPassword.equals(confirmPassword)) {
                         redirectAttributes.addFlashAttribute("error","Passwords are not matching !");
-                        return "redirect:/admin/settings";
+                        return "redirect:/home/settings";
                     }
                     redirectAttributes.addFlashAttribute("success", "Password changed successfully!");
                 }
@@ -112,7 +125,7 @@ public class AdminSettingsController {
             userService.updateUser(dbUser,newPassword,confirmPassword);
         }
 
-        return "redirect:/admin/settings";
+        return "redirect:/home/settings";
     }
 
 }
