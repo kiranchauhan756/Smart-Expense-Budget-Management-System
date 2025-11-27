@@ -32,29 +32,59 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="tempCategory :${categories}">
-             <td th:text="${tempCategory.name}"></td>
+            <tr th:each="tempCategory : ${categories}">
+                <td th:text="${tempCategory.name}"></td>
                 <td th:text="${tempCategory.description}"></td>
                 <td>
-                    <!-- IF defaultCategory = true → Buttons disabled -->
-                    <span th:if="${tempCategory.defaultCategory}">
-        <button class="btn btn-info btn-sm mb-3" disabled>Edit</button>
-        <button class="btn btn-danger btn-sm mb-3" disabled>Delete</button>
-    </span>
 
                     <!-- IF defaultCategory = false → Active buttons -->
                     <span th:if="${!tempCategory.defaultCategory}">
-        <!-- Edit Button -->
-        <a th:href="@{/home/category/edit(categoryId=${tempCategory.id})}"
-           class="btn btn-info btn-sm mb-3">
-           Edit
-        </a>
-                        <a th:href="@{/home/category/delete(categoryId=${tempCategory.id})}"
-           onclick="return confirm('Are you sure you want to delete this category?')"
-           class="btn btn-danger btn-sm mb-3">
-           Delete
-        </a>
-    </span>
+
+            <!-- Edit Button -->
+            <a th:href="@{/home/category/edit(categoryId=${tempCategory.id})}"
+               class="btn btn-info btn-sm mb-3">
+                Edit
+            </a>
+
+                        <!-- Delete Button (opens modal) -->
+            <a class="btn btn-danger btn-sm mb-3"
+               data-bs-toggle="modal"
+               data-bs-target="#deleteModal_${tempCategory.id}">
+                Delete
+            </a>
+
+                        <!-- Bootstrap Delete Confirmation Modal -->
+            <div class="modal fade" id="deleteModal_${tempCategory.id}" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <div class="modal-header bg-danger text-white">
+                            <h5 class="modal-title">Confirm Delete</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <div class="modal-body">
+                            Associated expenses with this category will also get deleted.
+                            Are you sure you want to delete this category?
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                Cancel
+                            </button>
+
+                            <a th:href="@{/home/category/delete(categoryId=${tempCategory.id})}"
+                               class="btn btn-danger">
+                                Delete
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </span>
+
                 </td>
             </tr>
             </tbody>

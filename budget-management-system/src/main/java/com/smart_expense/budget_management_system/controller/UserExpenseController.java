@@ -2,9 +2,8 @@ package com.smart_expense.budget_management_system.controller;
 
 import com.smart_expense.budget_management_system.entity.Expenses;
 import com.smart_expense.budget_management_system.service.CategoryService;
-import com.smart_expense.budget_management_system.service.AdminExpenseService;
+import com.smart_expense.budget_management_system.service.UserExpenseService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,24 +19,24 @@ import java.util.Map;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/admin/expense")
-public class AdminExpenseController {
-     private final AdminExpenseService expenseService;
-     private final CategoryService categoryService;
-    @Autowired
-    public AdminExpenseController(AdminExpenseService expenseService, CategoryService categoryService) {
-        this.expenseService = expenseService;
-        this.categoryService=categoryService;
+@RequestMapping("/user/expense")
+public class UserExpenseController {
+    private final UserExpenseService userExpenseService;
+    private final CategoryService categoryService;
+
+    public UserExpenseController(UserExpenseService userExpenseService, CategoryService categoryService) {
+        this.userExpenseService = userExpenseService;
+        this.categoryService = categoryService;
     }
     @GetMapping("/addExpense")
-    public String saveAdminExpensePage(Model model) {
+    public String saveUserExpensePage(Model model) {
         Expenses expenses=new Expenses();
         model.addAttribute(expenses);
         model.addAttribute("categories", categoryService.getAllCategories());
-        return "admin/addExpense";
+        return "user/addExpense";
     }
     @PostMapping("/save")
-    public String showAdminExpensePage(@Valid @ModelAttribute("expenses") Expenses expenses, BindingResult bindingResult,Model model){
+    public String showUserExpensePage(@Valid @ModelAttribute("expenses") Expenses expenses, BindingResult bindingResult, Model model){
         if(bindingResult.hasErrors()){
             Map<String,String> errors=new HashMap<>();
             bindingResult.getFieldErrors().forEach(
@@ -45,33 +44,33 @@ public class AdminExpenseController {
             );
             model.addAttribute("errors",errors);
             model.addAttribute("categories", categoryService.getAllCategories());
-            return "admin/addExpense";
+            return "user/addExpense";
         }
-        expenseService.saveExpense(expenses);
-        return "redirect:/admin/expense";
+        userExpenseService.saveExpense(expenses);
+        return "redirect:/user/expense";
     }
     @GetMapping
-    public String showAdminAllExpenses(Model model){
-        List<Expenses> expenseList=expenseService.getAllExpense();
+    public String showUserAllExpenses(Model model){
+        List<Expenses> expenseList=userExpenseService.getAllExpense();
         model.addAttribute("expenses",expenseList);
-        return "admin/expense";
+        return "user/expense";
     }
 
     @GetMapping("/edit")
-    public String showAdminExpenseUpdatePage(@RequestParam("expenseId") long id, Model model){
-        Optional<Expenses> expense = expenseService.findExpenseById(id);
+    public String showUserExpenseUpdatePage(@RequestParam("expenseId") long id, Model model){
+        Optional<Expenses> expense = userExpenseService.findExpenseById(id);
         if(expense.isPresent()){
             model.addAttribute("expenses", expense.get());
             model.addAttribute("categories", categoryService.getAllCategories()); // for dropdown
-            return "admin/editExpense";
+            return "user/editExpense";
         }
-        return "redirect:/admin/expense";
+        return "redirect:/user/expense";
     }
     @GetMapping("/delete")
     public String deleteExpense(@RequestParam("expenseId") long id,Model model){
-        Optional<Expenses> expense=expenseService.findExpenseById(id);
-        expenseService.deleteExpense(id);
+        Optional<Expenses> expense=userExpenseService.findExpenseById(id);
+        userExpenseService.deleteExpense(id);
         model.addAttribute("expenses",expense);
-        return "redirect:/admin/expense";
+        return "redirect:/user/expense";
     }
 }

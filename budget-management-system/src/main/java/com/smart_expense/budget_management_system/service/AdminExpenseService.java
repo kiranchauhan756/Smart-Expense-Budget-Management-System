@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ExpenseService {
-    private ExpenseRepository expenseRepository;
+public class AdminExpenseService {
+    private final ExpenseRepository expenseRepository;
 
    @Autowired
-    public ExpenseService(ExpenseRepository expenseRepository) {
+    public AdminExpenseService(ExpenseRepository expenseRepository) {
         this.expenseRepository = expenseRepository;
     }
 

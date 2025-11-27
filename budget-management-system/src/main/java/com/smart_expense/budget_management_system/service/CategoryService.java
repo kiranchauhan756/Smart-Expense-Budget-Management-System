@@ -1,7 +1,6 @@
 package com.smart_expense.budget_management_system.service;
 
 import com.smart_expense.budget_management_system.entity.Category;
-import com.smart_expense.budget_management_system.entity.DateDescription;
 import com.smart_expense.budget_management_system.entity.User;
 import com.smart_expense.budget_management_system.exception.CategoryAlreadyExistsException;
 import com.smart_expense.budget_management_system.exception.CategoryNotFoundException;
@@ -12,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,15 +40,10 @@ public class CategoryService {
             }
 
             if(user.isPresent()) {
+                category.setUser(user.get());
                 category.setDefaultCategory(false);
-                category.setDateDescription(new DateDescription(
-                        LocalDateTime.now(),
-                        user.get().getId(),
-                        user.get().getUsername(),
-                        LocalDateTime.now(),
-                        user.get().getUsername(),
-                        user.get().getId()
-                ));
+                category.setLastModifiedDate(LocalDateTime.now());
+                category.setCreatedDate(LocalDateTime.now());
             }
 
             categoryRepository.save(category);
@@ -66,6 +61,7 @@ public class CategoryService {
 
             updatingCategory.setName(category.getName());
             updatingCategory.setDescription(category.getDescription());
+            updatingCategory.setLastModifiedDate(LocalDateTime.now());
 
             categoryRepository.save(updatingCategory);
         }
@@ -93,5 +89,9 @@ public class CategoryService {
         throw new CategoryNotFoundException("No categories are present in the system yet...");
     }
 
+    public List<Category> showByUserIdOrDefaultCategory(Long id){
+     return categoryRepository.findByUserIdOrDefault(id);
+    }
 
 }
+

@@ -35,9 +35,6 @@ public class UserAdminCategoryController {
     @PostMapping("/save")
     public String addCategory(@Valid @ModelAttribute("category") Category category){
             categoryService.saveCategory(category);
-
-
-
         return "redirect:/home/category";
 
     }
@@ -50,31 +47,39 @@ public class UserAdminCategoryController {
     }
 
     @GetMapping
-    public String showAllCategories(Model model, Principal principal){
-        List<Category> categoryList=categoryService.getAllCategories();
-        model.addAttribute("categories",categoryList);
+    public String showAllCategories(Model model, Principal principal) {
+
         boolean isAdmin = false;
-        model.addAttribute("user", new User());
+        User user = new User();
+        Long userId = null;
+
         if (principal != null) {
-            Optional<User> userOpt = userService.findUserByUserName(principal.getName());
+            Optional<User> userOpt =
+                    userService.findUserByUserName(principal.getName());
 
             if (userOpt.isPresent()) {
-                User user = userOpt.get();
-                model.addAttribute("user", user);
-
-                List<Role> roles = user.getRoles();
-                isAdmin = roles.stream()
-                        .anyMatch(r -> r.getName().equals("ADMIN"));
-
-            } else {
-                model.addAttribute("user", new User());
+                user = userOpt.get();
+                userId = user.getId();
+                isAdmin = user.getRoles().stream()
+                        .anyMatch(r -> r.getName().equals("ADMIN") ||
+                                r.getName().equals("ROLE_ADMIN"));
             }
         }
 
-        model.addAttribute("layout", isAdmin ? "admin/dashboard" : "user/dashboard");
+        model.addAttribute("user", user);
+
+        List<Category> categoryList =
+                categoryService.showByUserIdOrDefaultCategory(userId);
+
+        model.addAttribute("categories", categoryList);
+
+        model.addAttribute("layout",
+                isAdmin ? "admin/dashboard" : "user/dashboard");
 
         return "home/category";
     }
+
+
     @GetMapping("/edit")
     public String showAdminCategoryUpdatePage(@RequestParam("categoryId") long id, Model model){
         Optional<Category> category=categoryService.findCategoryById(id);

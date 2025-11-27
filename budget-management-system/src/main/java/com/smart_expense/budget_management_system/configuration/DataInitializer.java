@@ -1,7 +1,6 @@
 package com.smart_expense.budget_management_system.configuration;
 
 import com.smart_expense.budget_management_system.entity.Category;
-import com.smart_expense.budget_management_system.entity.DateDescription;
 import com.smart_expense.budget_management_system.entity.Role;
 import com.smart_expense.budget_management_system.entity.User;
 import com.smart_expense.budget_management_system.repository.CategoryRepository;
@@ -43,28 +42,28 @@ public class DataInitializer implements CommandLineRunner {
                 roleRepository.save(new Role("ADMIN", "Role for admins"))));
 
         //Adding default Admin
-        if(userRepository.findByUsername("admin").isEmpty()){
-            User user=new User(LocalDate.of(1999,8,11),"budgetIQAdmin@gmail.com", passwordEncoder.encode( "admin"), "admin", true, LocalDateTime.now(),LocalDateTime.now());
+        if(userRepository.findByUsername("admin").isEmpty()) {
+            User user = new User(LocalDate.of(1999, 8, 11), "budgetIQAdmin@gmail.com", passwordEncoder.encode("admin"), "admin", true, LocalDateTime.now(), LocalDateTime.now());
             System.out.println(user.getDob());
             user.setPhoneNumber("9368045213");
-            user.setRoles(List.of(userRole.get(),adminRole.get()));
+            user.setRoles(List.of(userRole.get(), adminRole.get()));
             userRepository.save(user);
-        }
 
-        //Adding (Food,Groceries,Rent,Shopping,Medicine,Travel,School Fee,Electricity Bill,Gym,Electronics) default categories in  Category table
-        if(categoryRepository.count()==0) {
-            categoryRepository.save(new Category("Food",true, "Expenses related to eating out, restaurants, or daily meals.", new DateDescription(LocalDateTime.now(), 1L, "admin", LocalDateTime.now(), "admin", 1L)));
-            categoryRepository.save(new Category("Groceries",true, "Daily household essentials and food items purchased from stores or supermarkets.", new DateDescription(LocalDateTime.now(), 1L, "admin", LocalDateTime.now(), "admin", 1L)));
-            categoryRepository.save(new Category("Rent",true, "Monthly house or apartment rent payments.", new DateDescription(LocalDateTime.now(), 1L, "admin", LocalDateTime.now(), "admin", 1L)));
-            categoryRepository.save(new Category("Shopping",true, "Purchases of clothes, accessories, home decor, and other personal items.", new DateDescription(LocalDateTime.now(), 1L, "admin", LocalDateTime.now(), "admin", 1L)));
-            categoryRepository.save(new Category("Medicine", true,"Medical bills, pharmacy purchases, and health-related expenses.", new DateDescription(LocalDateTime.now(), 1L, "admin", LocalDateTime.now(), "admin", 1L)));
-            categoryRepository.save(new Category("Travel", true,"Transportation, trips, fuel, public transport fares, or travel bookings.", new DateDescription(LocalDateTime.now(), 1L, "admin", LocalDateTime.now(), "admin", 1L)));
-            categoryRepository.save(new Category("School Fee", true,"Payments for tuition fees, books, and other education-related costs.", new DateDescription(LocalDateTime.now(), 1L, "admin", LocalDateTime.now(), "admin", 1L)));
-            categoryRepository.save(new Category("Electricity Bill", true,"Monthly electricity and utility payments.", new DateDescription(LocalDateTime.now(), 1L, "admin", LocalDateTime.now(), "admin", 1L)));
-            categoryRepository.save(new Category("Gym",true, "Membership fees or fitness-related subscriptions and expenses.", new DateDescription(LocalDateTime.now(), 1L, "admin", LocalDateTime.now(), "admin", 1L)));
-            categoryRepository.save(new Category("Electronics",true, "Purchase or repair of gadgets like mobiles, laptops, or home appliances.", new DateDescription(LocalDateTime.now(), 1L, "admin", LocalDateTime.now(), "admin", 1L)));
-        }
 
+            //Adding (Food,Groceries,Rent,Shopping,Medicine,Travel,School Fee,Electricity Bill,Gym,Electronics) default categories in  Category table
+            if (categoryRepository.count() == 0) {
+                categoryRepository.save(new Category("Food", true, "Expenses related to eating out, restaurants, or daily meals.", LocalDateTime.now(), LocalDateTime.now(),user));
+                categoryRepository.save(new Category("Groceries", true, "Daily household essentials and food items purchased from stores or supermarkets.", LocalDateTime.now(), LocalDateTime.now(),user));
+                categoryRepository.save(new Category("Rent", true, "Monthly house or apartment rent payments.", LocalDateTime.now(), LocalDateTime.now(),user));
+                categoryRepository.save(new Category("Shopping", true, "Purchases of clothes, accessories, home decor, and other personal items.", LocalDateTime.now(), LocalDateTime.now(),user));
+                categoryRepository.save(new Category("Medicine", true, "Medical bills, pharmacy purchases, and health-related expenses.", LocalDateTime.now(), LocalDateTime.now(),user));
+                categoryRepository.save(new Category("Travel", true, "Transportation, trips, fuel, public transport fares, or travel bookings.", LocalDateTime.now(), LocalDateTime.now(),user));
+                categoryRepository.save(new Category("School Fee", true, "Payments for tuition fees, books, and other education-related costs.", LocalDateTime.now(), LocalDateTime.now(),user));
+                categoryRepository.save(new Category("Electricity Bill", true, "Monthly electricity and utility payments.", LocalDateTime.now(), LocalDateTime.now(),user));
+                categoryRepository.save(new Category("Gym", true, "Membership fees or fitness-related subscriptions and expenses.", LocalDateTime.now(), LocalDateTime.now(),user));
+                categoryRepository.save(new Category("Electronics", true, "Purchase or repair of gadgets like mobiles, laptops, or home appliances.", LocalDateTime.now(), LocalDateTime.now(),user));
+            }
+        }
 
     }
 }
